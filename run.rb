@@ -5,6 +5,6 @@ require 'csv'
 require 'net/http'
 require 'uri'
 require 'json'
-require 'crawl.rb'
+load 'lib/crawl.rb'
 
 Crawl.new
