@@ -5,9 +5,9 @@ require 'trollop'
 require 'controller.rb'
 
 opts = Trollop::options do
-  banner = ":Usage =>ruby run.rb -u http://amazon.com [options]" 
+  banner = ":Usage =>ruby crawl.rb -u http://amazon.com [options]" 
   opt :urls, 	"Set the URL you want to crawl", :type => :strings
-  opt :spider, 	"Set whether or not you want to spider url", :default => true
+  opt :sniper, 	"Set whether the crawler only grabs one link", :default => false
   opt :ua, 		"Set a custom user agent. Ex:-ua Googlebot"
 end
 

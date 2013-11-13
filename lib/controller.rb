@@ -5,11 +5,12 @@ require 'ap'
 module Crawl
   class Controller
     def initialize opts
-      @host = "http://0.0.0.0:3000"
-      if opts[:urls] == nil then @urls = self.get_follow_urls 
+      if opts[:urls] == nil then @urls = self.get_follow_urls; opts[:sniper]=true
       else @urls = opts[:urls] end
       while url = @urls.pop do
-        Crawl::Spider.new(url)
+        crawl = Crawl::Spider.new(url)
+        if opts[:sniper] == true then crawl.sniper
+        else crawl.shotgun end
       end
     end
 
