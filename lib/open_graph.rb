@@ -15,7 +15,7 @@ module Crawl
     ###############################################################
 
     def og_type
-    	@type = @page.doc.css('meta[@property="og:type"]').first['content'] if !@type rescue nil
+      @type = meta_property "og:type" if !@type rescue nil
     end
 
     ###############################################################
@@ -24,8 +24,8 @@ module Crawl
     ###############################################################
 
     def og_name
-    	@name = @page.doc.css('meta[@name="twitter:title"]').first['content'] if !@name rescue nil
-      @name = @page.doc.css('meta[@property="og:title"]').first['content'] if !@name rescue nil
+      @name = meta_name "twitter:title" if !@name rescue nil
+      @name = meta_property "og:title" if !@name rescue nil
     end
 
     ###############################################################
@@ -34,8 +34,8 @@ module Crawl
     ###############################################################
 
     def og_description
-    	@description = @page.doc.css('meta[@name="twitter:description"]').first['content'] if !@description rescue nil
-      @description = @page.doc.css('meta[@property="og:description"]').first['content'] if !@description rescue nil
+      @description = meta_name "twitter:description" if !@description rescue nil
+      @description = meta_property "og:description" if !@description rescue nil
     end
 
     ###############################################################
@@ -45,8 +45,8 @@ module Crawl
     ###############################################################
 
     def og_url
-    	@url = @page.doc.css('meta[@name="twitter:url"]').first['content'] if !@url rescue nil
-      @url = @page.doc.css('meta[@property="og:url"]').first['content'] if !@url rescue nil
+      @url = meta_name "twitter:url" if !@url rescue nil
+      @url = meta_property "og:url" if !@url rescue nil
     end
 
     ###############################################################
@@ -55,8 +55,8 @@ module Crawl
     ###############################################################
 
     def og_image
-    	@image = @page.doc.css('meta[@name="twitter:image"]').first['content'] if !@image rescue nil
-      @image = @page.doc.css('meta[@property="og:image"]').first['content'] if !@image rescue nil
+      @image = meta_name "twitter:image" if !@image rescue nil
+      @image = meta_property "og:image" if !@image rescue nil
     end
 
     ###############################################################
@@ -64,7 +64,54 @@ module Crawl
     ###############################################################
 
     def og_audio
-      @audio = @page.doc.css('meta[@property="og:audio"]').first['content'] if !@audio rescue nil
+      @audio = meta_property "og:audio" if !@audio rescue nil
+    end
+
+    ###############################################################
+    # og:determiner - The word that appears before this object's 
+    # title in a sentence. An enum of (a, an, the, "", auto). If 
+    # auto is chosen, the consumer of your data should chose 
+    # between "a" or "an". Default is "" (blank).
+    ###############################################################
+
+    def og_determiner
+      @determiner = meta_property "og:determiner" if !@determiner rescue nil
+    end
+
+    ###############################################################
+    # og:locale - The locale these tags are marked up in. Of the 
+    # format language_TERRITORY. Default is en_US.
+    ###############################################################
+
+    def og_locale
+      @locale = meta_property "og:locale" if !@locale rescue nil
+    end
+
+    ###############################################################
+    # og:locale:alternate - An array of other locales this page is 
+    # available in.
+    ###############################################################
+
+    def og_locale_alternate
+      @locale_alternate = meta_property "og:locale:alternate" if !@locale_alternate rescue nil
+    end
+
+    ###############################################################
+    # og:site_name - If your object is part of a larger web site, 
+    # the name which should be displayed for the overall site. 
+    # e.g., "IMDb".
+    ###############################################################
+
+    def og_site_name
+      @site_name = meta_property "og:site_name" if !@site_name rescue nil
+    end
+
+    ###############################################################
+    # og:video - A URL to a video file that complements this object
+    ###############################################################
+
+    def og_video
+      @video = meta_property "og:video" if !@video rescue nil
     end
 
     # ###############################################################
@@ -72,7 +119,15 @@ module Crawl
     # ###############################################################
 
     # def og_
-    #   @image = @page.doc.css('meta[@property="og:image"]').first['content'] if !@image
+    #   @image = @page.doc.css('meta[@property="og:image"]').first['content'] if !@image rescue nil
     # end
+
+    def meta_property metadata
+        @page.doc.css("meta[@property='#{metadata}']").first['content']
+    end
+
+    def meta_name metadata
+        @page.doc.css("meta[@name='#{metadata}']").first['content']
+    end
   end
 end

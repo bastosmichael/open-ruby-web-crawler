@@ -36,8 +36,8 @@ module Crawl
       puts page.doc.at('title').inner_html rescue nil
       puts page.url
       data = Crawl::Scrape.new(page).save
-      data[:organization] = @name if data
-      ap data if !data.nil?
+      data['organization'] = @name if data
+      Crawl::Data.new(data).save
     end
 
     def name
