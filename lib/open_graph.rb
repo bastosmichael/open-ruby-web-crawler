@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
 
+    ###############################################################
+    # http://ogp.me/ 
+    # The Open Graph protocol enables any web page to become a rich 
+    # object in a social graph. For instance, this is used on 
+    # Facebook to allow any web page to have the same functionality 
+    # as any other object on Facebook.
+    ###############################################################
+
 module Crawl
   class OpenGraph < Crawler
     def build
@@ -15,7 +23,7 @@ module Crawl
     ###############################################################
 
     def og_type
-      @type = meta_property "og:type" if !@type rescue nil
+      @type = meta_property("og:type").downcase if !@type rescue nil
     end
 
     ###############################################################
@@ -47,6 +55,7 @@ module Crawl
     def og_url
       @url = meta_name "twitter:url" if !@url rescue nil
       @url = meta_property "og:url" if !@url rescue nil
+      @id = @open_graph['name'].tr(" ", "_") rescue @id
     end
 
     ###############################################################

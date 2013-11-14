@@ -4,6 +4,7 @@ module Crawl
 	class Crawler
 		def initialize page
 			@page = page
+			@id = Digest::MD5.hexdigest(@page.url.to_s)
 			self.build
 		end
 		
