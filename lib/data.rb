@@ -5,17 +5,18 @@ module Crawl
   class Data
     def initialize data
     	@data = data
-    	@organization = @data['organization']
+    	@organization = @data['site_name']
       @id = @data['id']
-      @type = @data['open_graph']['type'] rescue nil
+      @type = @data['type'] rescue nil
       self.check_directory
       ap @data
+      @id = @data['name'].tr(" ", "_") if @type
     end
 
     def check_directory
       path = "data/#{@organization}"
       FileUtils.mkdir_p path
-      FileUtils.mkdir_p path + "/misc"
+      FileUtils.mkdir_p path + "/Miscellaneous"
       FileUtils.mkdir_p path + "/#{@type}" rescue nil
     end
 
@@ -27,7 +28,7 @@ module Crawl
       if !@type.nil?
         save_to_file "data/#{@organization}/#{@type}/#{@id}.json"
       else
-        save_to_file "data/#{@organization}/misc/#{@id}.json"
+        save_to_file "data/#{@organization}/Miscellaneous/#{@id}.json"
       end
     end
   end

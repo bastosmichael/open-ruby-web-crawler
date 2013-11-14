@@ -11,9 +11,12 @@
 module Crawl
   class OpenGraph < Crawler
     def build
+      @open_graph = false
       self.methods.grep(/og/).each do |og|
         self.send(og) 
       end
+      @open_graph = true if @type
+      # @id = @name.tr(" ", "_") if @type
     end
 
     ###############################################################
@@ -23,7 +26,7 @@ module Crawl
     ###############################################################
 
     def og_type
-      @type = meta_property("og:type").downcase if !@type rescue nil
+      @type = meta_property("og:type").downcase.capitalize if !@type rescue nil
     end
 
     ###############################################################
@@ -55,7 +58,7 @@ module Crawl
     def og_url
       @url = meta_name "twitter:url" if !@url rescue nil
       @url = meta_property "og:url" if !@url rescue nil
-      @id = @open_graph['name'].tr(" ", "_") rescue @id
+      @id = Digest::MD5.hexdigest(@url) if @url
     end
 
     ###############################################################
@@ -112,7 +115,7 @@ module Crawl
     ###############################################################
 
     def og_site_name
-      @site_name = meta_property "og:site_name" if !@site_name rescue nil
+      @site_name = meta_property("og:site_name").capitalize if !@site_name rescue nil
     end
 
     ###############################################################
@@ -132,11 +135,13 @@ module Crawl
     # end
 
     def meta_property metadata
-        @page.doc.css("meta[@property='#{metadata}']").first['content']
+        property = @page.doc.css("meta[@property='#{metadata}']").first['content']
+        # if !property.nil? then @open_graph = true; return property end
     end
 
     def meta_name metadata
-        @page.doc.css("meta[@name='#{metadata}']").first['content']
+        name = @page.doc.css("meta[@name='#{metadata}']").first['content']
+        # if !name.nil? then @open_graph = true; return name end
     end
   end
 end
