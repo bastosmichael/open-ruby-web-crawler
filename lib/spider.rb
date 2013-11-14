@@ -33,7 +33,11 @@ module Crawl
     end
 
     def scrape page
-      Crawl::Scrape.new(page)
+      puts page.doc.at('title').inner_html rescue nil
+      puts page.url
+      data = Crawl::Scrape.new(page).save
+      data[:organization] = @name if data
+      ap data if !data.nil?
     end
 
     def name
