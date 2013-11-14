@@ -1,4 +1,6 @@
-pricels-crawler
+ruby-schema.org-open-graph-web-crawler
 ===============
 
-My new crawler using both Anemone and Mechanize
+My attempt to write an all purpose web crawler in ruby using schema.org and open graph principles.
+Uses both Anemone and Nokogiri
+
