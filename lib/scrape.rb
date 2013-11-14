@@ -9,6 +9,7 @@ module Crawl
       @url = @page.url.to_s
       @title = @page.doc.at('title').inner_html rescue nil
       @open_graph = Crawl::OpenGraph.new(@page).save #rescue nil
+      @id = @open_graph['name'].tr(" ", "_") rescue @id
       self.custom
     end
 
