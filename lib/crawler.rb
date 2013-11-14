@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 module Crawl
-	class Parse
+	class Crawler
 		def initialize page
 			@page = page
 			self.build
