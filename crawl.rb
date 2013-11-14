@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
-$:.unshift File.dirname(__FILE__)
-$:.unshift File.expand_path('../lib', __FILE__)
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/sites/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/schema/*.rb'].each {|file| require file }
+
 require 'trollop'
-require 'controller.rb'
 
 opts = Trollop::options do
   banner = ":Usage =>ruby crawl.rb -u http://amazon.com [options]" 

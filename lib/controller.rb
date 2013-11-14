@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'spider.rb'
 require 'ap'
 
 module Crawl
