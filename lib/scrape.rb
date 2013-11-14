@@ -8,12 +8,8 @@ module Crawl
       @title = @page.doc.at('title').inner_html rescue nil
       @url = @page.url.to_s
       @crawled_on = Time.now.getutc
-      self.find_schema
+      @og = Crawl::OpenGraph.new(@page).save #rescue nil
       self.run
-    end
-
-    def find_schema
-      @schema = Crawl::OpenGraph.new(@page).save #rescue nil
     end
 
     def run
