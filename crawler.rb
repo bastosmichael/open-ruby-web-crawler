@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
-#Dir[File.dirname(__FILE__) + '/sites/*.rb'].each {|file| require file }
-#Dir[File.dirname(__FILE__) + '/schema/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/lib/**/*.rb'].each {|file| require file }
 
 require 'trollop'
 
@@ -12,4 +11,5 @@ opts = Trollop::options do
   opt :ua, 		"Set a custom user agent. Ex:-ua Googlebot"
 end
 
+trap("INT") { exit }
 Crawl::Controller.new(opts)

@@ -33,12 +33,12 @@ module Crawl
     end
 
     def scrape page
-      puts page.doc.at('title').inner_html rescue nil
-      puts page.url
-
-      # data = Crawl.const_get("Amazon")
-      data = Crawl::Scrape.new(page).save
-
+      begin
+        puts "Using #{@name} class"
+        data = Crawl.const_get(@name).new(page).save
+      rescue
+        data = Crawl::Scrape.new(page).save
+      end 
 
       data['site_name'] = @name if !data['site_name']
       Crawl::Data.new(data).save
