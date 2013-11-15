@@ -7,10 +7,11 @@ module Crawl
     	@data = data
     	@organization = @data['site_name']
       @id = @data['id']
-      @type = @data['type'] rescue nil
+      @type = @data['open_graph']['type'] if !@type rescue nil
+      @type = @data['schema_org']['type'] if !@type rescue nil 
       self.check_directory
       ap @data
-      @id = @data['name'].tr(" ", "_") if @type
+      @id = @data['name'].tr("/", "-").tr(" ", "_") if @type
     end
 
     def check_directory
