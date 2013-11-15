@@ -41,7 +41,7 @@ module Crawl
 
 
       data['site_name'] = @name if !data['site_name']
-      Crawl::Data.new(data)#.save
+      Crawl::Data.new(data).save
     end
 
     def name
