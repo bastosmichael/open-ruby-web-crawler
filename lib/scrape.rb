@@ -4,9 +4,12 @@ require 'digest/md5'
 module Crawl
   class Scrape < Crawler
     def build
-      self.methods.grep(/scrape/).each do |scrape|
-        self.send(scrape) 
-      end
+      # self.methods.grep(/scrape/).each do |scrape|
+      #   self.send(scrape) 
+      # end
+      scrape_open_graph
+      scrape_schema_org
+      scrape_custom
     end
 
     def scrape_open_graph
