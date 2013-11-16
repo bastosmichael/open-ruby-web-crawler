@@ -27,7 +27,7 @@ module Crawl
     def save
       if !@type.nil?
         file_handling(@path + "/#{@type}/#{@id}.json")
-        File.open(@path + "/#{@type}/.#{@alternate_id}.json","w").puts(@hash.to_json) 
+        # File.open(@path + "/#{@type}/.#{@alternate_id}.json","w").puts(@hash.to_json) 
       else
         file_handling(@path + "/Miscellaneous/#{@id}.json")
       end
