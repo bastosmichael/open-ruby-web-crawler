@@ -8,7 +8,6 @@ module Crawl
       @opts = self.settings
       @site = site
       @name = self.name
-      ap @name
     end
 
     def shotgun
@@ -51,6 +50,7 @@ module Crawl
     def settings
       {discard_page_bodies: true, 
        skip_query_strings: true, 
+       threads: 1, 
        # depth_limit:2000, 
        read_timeout: 10, 
        user_agent: @ua,
