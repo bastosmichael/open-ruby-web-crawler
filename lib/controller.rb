@@ -6,6 +6,10 @@ module Crawl
     def initialize opts
       if opts[:urls] == nil then @urls = self.get_follow_urls; opts[:sniper]=true
       else @urls = opts[:urls] end
+      if opts[:file] == true
+        # ap File.open('url.txt', "rb").read
+        # File.foreach('url.txt').map { |line| @urls << l.to_s }
+      end
       while url = @urls.pop do
         crawl = Crawl::Spider.new(url)
         if opts[:sniper] == true then crawl.sniper

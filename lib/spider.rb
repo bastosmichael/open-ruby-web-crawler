@@ -51,7 +51,7 @@ module Crawl
       {discard_page_bodies: true, 
        skip_query_strings: true, 
        # threads: 1, 
-       depth_limit: 2, 
+       depth_limit: 1, 
        read_timeout: 10, 
        user_agent: @ua,
        obey_robots_txt: false,

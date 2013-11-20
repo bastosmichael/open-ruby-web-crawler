@@ -7,7 +7,6 @@ module Crawl
       ap data
       @data = data
       @hash = {}
-      # @time = Time.now.getutc
     	@organization = data['site_name']
       @id = data['id']
       @type = data['type'] if !@type rescue nil
@@ -26,10 +25,14 @@ module Crawl
       File.open(path,"w").puts(@hash.to_json) rescue nil
     end
 
+    def recursive_crawl
+      File.open("data/urls.txt","a+").write(@data['url']+" ") rescue nil
+    end
+
     def save
       if !@type.nil?
         file_handling(@path + "/#{@type}/#{@id}.json")
-        File.open(@path + "/url.yml","a+").write(@data['url']+" ") rescue nil
+        self.recursive_crawl
         # File.open(@path + "/#{@type}/.#{@alternate_id}.json","w").puts(@hash.to_json) 
       else
         file_handling(@path + "/Miscellaneous/#{@id}.json")
