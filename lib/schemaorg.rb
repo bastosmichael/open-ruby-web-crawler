@@ -6,7 +6,7 @@
     ###############################################################
 
 module Crawl
-  class SchemaOrg #< Crawler
+  class SchemaOrg #< Parse
         def initialize page
             @page = page
             @id = Digest::MD5.hexdigest(@page.url.to_s)

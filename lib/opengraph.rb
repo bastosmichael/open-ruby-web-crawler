@@ -9,7 +9,7 @@
     ###############################################################
 
 module Crawl
-    class OpenGraph #< Crawler
+    class OpenGraph #< Parse
         def initialize page
             @page = page
             @id = Digest::MD5.hexdigest(@page.url.to_s)
