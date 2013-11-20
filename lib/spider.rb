@@ -39,19 +39,19 @@ module Crawl
         data = Crawl::Scrape.new(page).save
       end 
 
-      data['site_name'] = @name if !data['site_name']
+      data['site_name'] = @name #if !data['site_name']
       Crawl::Data.new(data).save
     end
 
     def name
-      @site.to_s.match(/www.(.+)\./)[1].capitalize rescue @site.to_s.match(/\/\/(.+)\./)[1].capitalize
+      @site.to_s.match(/www.(.+)\.com/)[1].capitalize rescue @site.to_s.match(/\/\/(.+)\.com/)[1].capitalize
     end
 
     def settings
       {discard_page_bodies: true, 
        skip_query_strings: true, 
        # threads: 1, 
-       depth_limit:1, 
+       depth_limit: 2, 
        read_timeout: 10, 
        user_agent: @ua,
        obey_robots_txt: false,
