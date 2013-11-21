@@ -21,6 +21,14 @@ module Crawl
       FileUtils.mkdir_p @path + "/Miscellaneous"
       FileUtils.mkdir_p @path + "/#{@type}" rescue nil
       @hash = JSON.parse(File.open(path, "rb").read) rescue {}
+      @hash['id'] = @data['id']
+      @hash['url'] = @data['url']
+      @hash['name'] = @data['name']
+      @hash['site_name'] = @data['site_name']
+      @data.delete('site_name')
+      @data.delete('name')
+      @data.delete('url')
+      @data.delete('id')
       @hash["#{Date.today}"] = @data
       File.open(path,"w").puts(@hash.to_json) rescue nil
     end
