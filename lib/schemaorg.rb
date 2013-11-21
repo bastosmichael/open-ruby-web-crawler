@@ -10,7 +10,8 @@ module Crawl
         def initialize page
             @page = page
             @id = Digest::MD5.hexdigest(@page.url.to_s)
-            @url = @page.url.to_s
+            @url = @page.doc.css("link[@rel='canonical']").first['href'] if !@url
+            @url = @page.url.to_s if !@url
             @name = @page.doc.at('title').inner_html rescue nil
             self.build
         end
@@ -53,5 +54,16 @@ module Crawl
         end
       end
     end
+
+    ###############################################################
+    # Grabbing Keywords as Tags
+    ###############################################################
+
+    def schema_tags
+      tags = @page.doc.css("meta[@name='keywords']").first['content'].split(' ')
+      tags.delete_if {|x| x.match(/and|for|more/)}
+      @tags = tags
+    end
+
   end
 end

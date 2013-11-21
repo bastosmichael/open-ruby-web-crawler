@@ -13,7 +13,8 @@ module Crawl
         def initialize page
             @page = page
             @id = Digest::MD5.hexdigest(@page.url.to_s)
-            @url = @page.url.to_s
+            @url = @page.doc.css("link[@rel='canonical']").first['href'] if !@url
+            @url = @page.url.to_s if !@url
             @name = @page.doc.at('title').inner_html rescue nil
             self.build
         end
@@ -144,20 +145,12 @@ module Crawl
         end
 
         ###############################################################
-        # 
+        # og:upc - A UPC or Universal Product Code
         ###############################################################
 
         def og_upc
           @upc = @page.doc.css('meta[@property="og:upc"]').first['content'] if !@upc rescue nil
         end
-
-        # ###############################################################
-        # # 
-        # ###############################################################
-
-        # def og_
-        #   @image = @page.doc.css('meta[@property="og:image"]').first['content'] if !@image rescue nil
-        # end
 
         def meta_property metadata
             property = @page.doc.css("meta[@property='#{metadata}']").first['content']
