@@ -38,49 +38,20 @@ module Crawl
     # and have an asterisk 
     ###############################################################
 
-
     def schema_type
       @type = @page.body.match(/itemtype="http:\/\/schema.org\/(.+?)"/)[1] rescue nil
     end
 
     ###############################################################
-    # The name of the item.
+    # Grab Meta Data for Schema and assign instance variable
     ###############################################################
 
-    def schema_name
-      # @name = @page.doc.css('//div[contains(@itemprop, "name")]').text rescue nil
+    def schema_meta
+      @page.doc.css('//meta').each do |m|
+        if !m[:itemprop].nil?
+          instance_variable_set("@#{m[:itemprop]}","#{m[:content]}")
+        end
+      end
     end
-
-    ###############################################################
-    # A short description of the item.
-    ###############################################################
-
-    def schema_description
-      # @description = @page.doc.css('')
-    end
-
-    ###############################################################
-    # URL of the item.
-    ###############################################################
-
-    def schema_url
-      # @url = @page.doc.css('')
-    end
-
-    ###############################################################
-    # URL of an image of the item.
-    ###############################################################
-
-    def schema_image
-      # @image = @page.doc.css('')
-    end
-
-    ###############################################################
-    # 
-    ###############################################################
-
-    # def schema_
-      # # @ = @page.doc.css('')
-    # end
   end
 end
