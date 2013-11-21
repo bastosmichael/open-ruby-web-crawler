@@ -28,7 +28,7 @@ module Crawl
       # schema = @page.doc.css('//*[contains(@itemtype, "schema.org")]').first["itemtype"]
       @schema_org = false
       self.methods.grep(/schema/).each do |schema|
-        self.send(schema)
+        self.send(schema) rescue nil
       end
       @schema_org = true if @type
     end
@@ -39,7 +39,7 @@ module Crawl
     ###############################################################
 
     def schema_type
-      @type = @page.body.match(/itemtype="http:\/\/schema.org\/(.+?)"/)[1] rescue nil
+      @type = @page.body.match(/itemtype="http:\/\/schema.org\/(.+?)"/)[1]
     end
 
     ###############################################################
