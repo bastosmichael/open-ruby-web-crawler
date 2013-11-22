@@ -21,16 +21,19 @@ module Crawl
       FileUtils.mkdir_p @path + "/Miscellaneous"
       FileUtils.mkdir_p @path + "/#{@type}" rescue nil
       @hash = JSON.parse(File.open(path, "rb").read) rescue {}
-      @hash['id'] = @data['id']
-      @hash['url'] = @data['url']
-      @hash['name'] = @data['name']
-      @hash['site_name'] = @data['site_name']
-      @data.delete('site_name')
-      @data.delete('name')
-      @data.delete('url')
-      @data.delete('id')
+      self.canonical_data 'id'
+      self.canonical_data 'name'
+      self.canonical_data 'description'
+      self.canonical_data 'url'
+      self.canonical_data 'image'
+      self.canonical_data 'site_name'
       @hash["#{Date.today}"] = @data
       File.open(path,"w").puts(@hash.to_json) rescue nil
+    end
+
+    def canonical_data data
+      @hash[data] = @data[data]
+      @data.delete(data)
     end
 
     def recursive_crawl

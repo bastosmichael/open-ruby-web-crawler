@@ -12,6 +12,7 @@ module Crawl
             @id = Digest::MD5.hexdigest(@page.url.to_s)
             @url = @page.doc.css("link[@rel='canonical']").first['href'] if !@url
             @url = @page.url.to_s if !@url
+            @image = @page.doc.css("link[@rel='image_src']").first['href'] if !@image rescue nil
             @name = @page.doc.at('title').inner_html rescue nil
             self.build
         end
@@ -50,7 +51,19 @@ module Crawl
     def schema_meta
       @page.doc.css('//meta').each do |m|
         if !m[:itemprop].nil?
-          instance_variable_set("@#{m[:itemprop]}","#{m[:content]}")
+          instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m[:content]}")
+        end
+      end
+    end
+
+    ###############################################################
+    # Grab Span Data for Schema and assign instance variable
+    ###############################################################
+
+    def schema_span
+      @page.doc.css('//span').each do |m|
+        if !m[:itemprop].nil?
+          instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m.text}")
         end
       end
     end

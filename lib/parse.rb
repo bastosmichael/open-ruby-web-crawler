@@ -8,6 +8,7 @@ module Crawl
 			@url = @page.doc.css("link[@rel='canonical']").first['href'] if !@url rescue nil
 		    @url = @page.url.to_s if !@url
 		    @name = @page.doc.at('title').inner_html if !@name rescue nil
+		    @description = @page.doc.css("meta[@name='description']").first['content'] if !@description rescue nil
 		    @mobile_url = @page.doc.css("link[@media='handheld']").first['href'] if !@mobile_url rescue nil
 			self.build
 		end
