@@ -28,7 +28,7 @@ module Crawl
       self.canonical_data 'image'
       self.canonical_data 'site_name'
       @hash["#{Date.today}"] = @data
-      File.open(path,"w").puts(@hash.to_json) rescue nil
+      File.open(path,"w").write(@hash.to_json) rescue nil
     end
 
     def canonical_data data
