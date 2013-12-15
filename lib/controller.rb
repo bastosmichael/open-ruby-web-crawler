@@ -14,6 +14,7 @@ module Crawl
         crawl = Crawl::Spider.new(url)
         if opts[:sniper] == true then crawl.sniper
         else crawl.shotgun end
+        crawl = nil
       end
     end
 

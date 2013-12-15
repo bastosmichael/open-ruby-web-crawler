@@ -12,7 +12,7 @@ module Crawl
 
     def shotgun
       Anemone.crawl(@site, @opts) do |anemone|
-        # anemone.storage = Anemone::Storage.Redis
+        anemone.storage = Anemone::Storage.MongoDB
         anemone.on_every_page do |page|
           self.scrape page
           page.discard_doc!
@@ -22,7 +22,7 @@ module Crawl
 
     def sniper
       Anemone.crawl(@site, @opts) do |anemone|
-        # anemone.storage = Anemone::Storage.Redis
+        anemone.storage = Anemone::Storage.MongoDB
         anemone.on_every_page do |page|
           self.scrape page
           page.discard_doc!
@@ -40,7 +40,9 @@ module Crawl
       end 
 
       data['site_name'] = @name #if !data['site_name']
-      Crawl::Data.new(data).save
+      saving = Crawl::Data.new(data).save
+      data = nil
+      saving = nil
     end
 
     def name

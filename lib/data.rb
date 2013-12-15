@@ -6,6 +6,8 @@ module Crawl
     def initialize data
       ap data
       @data = data
+      @data['created_on'] = Date.today
+      @data['edited_on'] = Date.today
       @hash = {}
     	@organization = data['site_name']
       @id = data['id']
@@ -44,10 +46,10 @@ module Crawl
     def save
       if !@type.nil?
         file_handling(@path + "/#{@type}/#{@id}.json")
-        self.recursive_crawl
+        # self.recursive_crawl
         # File.open(@path + "/#{@type}/.#{@alternate_id}.json","w").puts(@hash.to_json) 
       else
-        file_handling(@path + "/Miscellaneous/#{@id}.json")
+        #file_handling(@path + "/Miscellaneous/#{@id}.json")
       end
     end
   end

@@ -14,7 +14,7 @@ module Crawl
       self.build
     end
     
-      def save
+    def save
         remove_instance_variable(:@page)
         hash = {}
         instance_variables.each do |var| 
@@ -33,12 +33,14 @@ module Crawl
       og = Crawl::OpenGraph.new(@page)
       @open_graph = og.save #rescue nil
       @open_graph.each { |k,v| instance_variable_set("@#{k}",v) }
+      og = nil
     end
 
     def scrape_schema_org
       schema = Crawl::SchemaOrg.new(@page)
       @schema_org = schema.save
       @schema_org.each { |k,v| instance_variable_set("@#{k}",v) }
+      schema = nil
     end
 
     def scrape_custom
