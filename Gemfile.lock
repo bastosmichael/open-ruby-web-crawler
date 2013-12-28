@@ -5,6 +5,7 @@ GEM
       nokogiri (>= 1.3.0)
       robotex (>= 1.0.0)
     awesome_print (1.2.0)
+    bson (1.9.2)
     domain_name (0.5.14)
       unf (>= 0.0.5, < 1.0.0)
     haml (4.0.4)
@@ -22,6 +23,8 @@ GEM
       webrobots (>= 0.0.9, < 0.2)
     mime-types (1.25)
     mini_portile (0.5.2)
+    mongo (1.9.2)
+      bson (~> 1.9.2)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9)
     nokogiri (1.6.0)
@@ -30,6 +33,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.1)
       rack
+    redis (3.0.6)
     robotex (1.0.0)
     sinatra (1.4.4)
       rack (~> 1.4)
@@ -50,6 +54,8 @@ DEPENDENCIES
   awesome_print
   haml
   mechanize
+  mongo
   nokogiri
+  redis
   sinatra
   trollop

@@ -12,7 +12,7 @@ module Crawl
 
     def shotgun
       Anemone.crawl(@site, @opts) do |anemone|
-        anemone.storage = Anemone::Storage.MongoDB
+        #anemone.storage = Anemone::Storage.MongoDB
         anemone.on_every_page do |page|
           self.scrape page
           page.discard_doc!
@@ -22,7 +22,7 @@ module Crawl
 
     def sniper
       Anemone.crawl(@site, @opts) do |anemone|
-        anemone.storage = Anemone::Storage.MongoDB
+        #anemone.storage = Anemone::Storage.MongoDB
         anemone.on_every_page do |page|
           self.scrape page
           page.discard_doc!
@@ -53,7 +53,7 @@ module Crawl
       {discard_page_bodies: true, 
        skip_query_strings: true, 
        # threads: 1, 
-       depth_limit: 20, 
+       depth_limit: 3, 
        read_timeout: 10, 
        user_agent: @ua,
        obey_robots_txt: false,

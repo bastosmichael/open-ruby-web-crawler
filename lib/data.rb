@@ -20,7 +20,7 @@ module Crawl
 
     def file_handling path
       FileUtils.mkdir_p @path
-      FileUtils.mkdir_p @path + "/Miscellaneous"
+      #FileUtils.mkdir_p @path + "/Miscellaneous"
       FileUtils.mkdir_p @path + "/#{@type}" rescue nil
       # @hash = JSON.parse(File.open(path, "rb").read) rescue {}
       #self.canonical_data 'id'
