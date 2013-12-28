@@ -1,1 +1,12 @@
 /data
+.bash_history
+.bash_logout
+.bash_profile
+.bashrc
+.cache/
+.gem/
+.gitconfig
+.profile
+.rvm/
+.zlogin
+.zshrc
