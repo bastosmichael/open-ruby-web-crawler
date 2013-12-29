@@ -3,11 +3,12 @@ require 'anemone'
 
 module Crawl
   class Spider
-    def initialize site
+    def initialize site, depth
       @ua   = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.43 Safari/536.11"
       @opts = self.settings
       @site = site
       @name = self.name
+      @depth = depth
     end
 
     def shotgun
@@ -16,17 +17,7 @@ module Crawl
         anemone.on_every_page do |page|
           self.scrape page
           page.discard_doc!
-        end
-      end
-    end
-
-    def sniper
-      Anemone.crawl(@site, @opts) do |anemone|
-        #anemone.storage = Anemone::Storage.MongoDB
-        anemone.on_every_page do |page|
-          self.scrape page
-          page.discard_doc!
-          return
+          if @depth == 0 then return end
         end
       end
     end
@@ -53,7 +44,7 @@ module Crawl
       {discard_page_bodies: true, 
        skip_query_strings: true, 
        # threads: 1, 
-       depth_limit: 3, 
+       depth_limit: @depth, 
        read_timeout: 10, 
        user_agent: @ua,
        obey_robots_txt: false,
