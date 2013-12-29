@@ -16,19 +16,17 @@ module Crawl
     end
 
     def get_host
+      @host = 'http://0.0.0.0:3000'
       if @options[:host]
         @host = @options[:host]
-      else
-        @host = 'http://0.0.0.0:3000'
       end
     end
 
     def get_urls
-      @urls = nil
-      if @options[:urls] == nil 
-        @urls = self.get_urls_from_api
-      else 
-        @urls = @options[:urls] 
+      @urls = []
+      @urls.concat(get_urls_from_api.reverse)
+      if @options[:urls]
+        @urls.concat(@options[:urls])
       end
     end
 
