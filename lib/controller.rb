@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+require 'net/http'
+require 'uri'
 require 'ap'
 
 module Crawl
@@ -50,7 +52,8 @@ module Crawl
 
     def get_json path
         begin
-          response = Net::HTTP.get(URI(path))
+          uri = URI(path + "?access_token=#{@options[:api_key]}")
+          response = Net::HTTP.get(uri)
           job = JSON.parse(response)
         rescue => e
           ap e
