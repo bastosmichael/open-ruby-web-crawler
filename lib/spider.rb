@@ -24,14 +24,19 @@ module Crawl
 
     def scrape page
       begin
-        puts "Using #{@name} class"
         data = Crawl.const_get(@name).new(page).save
       rescue
         data = Crawl::Scrape.new(page).save
       end 
 
       data['site_name'] = @name #if !data['site_name']
-      saving = Crawl::Data.new(data, @options).save
+
+      begin
+        saving = Crawl.const_get(@name+"Data").new(data, @options).save
+      rescue
+        saving = Crawl::Data.new(data, @options).save
+      end 
+
       data = nil
       saving = nil
     end
