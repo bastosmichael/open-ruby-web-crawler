@@ -3,40 +3,28 @@ require 'json'
 
 module Crawl
   class Data
-    def initialize data
-      ap data
+    def initialize data, opts
+      # ap data
       @data = data
-      @data['created_on'] = Date.today
-      @data['edited_on'] = Date.today
-      @hash = {}
-    	@organization = data['site_name']
-      @id = data['id']
-      @type = data['type'] if !@type rescue nil
-      @type = data['type'] if @type.nil?
-      if data['name'] == "" then @type = nil end
-      @path = "data/#{@organization}"
+      @options = opts
+      array_into_string
+      if @data['name'] == "" then @data['type'] = nil end
+      @path = "data/#{data['site_name']}"
       # @alternate_id = data['name'].tr("/", "-").tr(" ", "_") if @type
+    end
+
+    def array_into_string
+      @data.each do |name, value|
+        if value.kind_of?(Array) 
+          @data[name] = value.join(',') 
+        end
+      end
     end
 
     def file_handling path
       FileUtils.mkdir_p @path
-      #FileUtils.mkdir_p @path + "/Miscellaneous"
-      FileUtils.mkdir_p @path + "/#{@type}" rescue nil
-      # @hash = JSON.parse(File.open(path, "rb").read) rescue {}
-      #self.canonical_data 'id'
-      #self.canonical_data 'name'
-      #self.canonical_data 'description'
-      #self.canonical_data 'url'
-      #self.canonical_data 'image'
-      #self.canonical_data 'site_name'
-      #@hash["#{Date.today}"] = @data
-      
+      FileUtils.mkdir_p @path + "/#{data['type']}" rescue nil
       File.open(path,"w").write(@data.to_json) rescue nil
-    end
-
-    def canonical_data data
-      @hash[data] = @data[data]
-      @data.delete(data)
     end
 
     def recursive_crawl
@@ -44,13 +32,22 @@ module Crawl
     end
 
     def save
-      if !@type.nil?
-        file_handling(@path + "/#{@type}/#{@id}.json")
+      if !@data['type'].nil?
+        file_handling(@path + "/#{@data['type']}/#{@data['id']}.json")
+        post_data
         # self.recursive_crawl
         # File.open(@path + "/#{@type}/.#{@alternate_id}.json","w").puts(@hash.to_json) 
       else
-        #file_handling(@path + "/Miscellaneous/#{@id}.json")
+        #file_handling(@path + "/Miscellaneous/#{@data['id']}.json")
       end
+    end
+
+    private
+
+    def post_data
+      url = "#{@options[:host]}/api/v1/listings?access_token=#{@options[:api_key]}"
+      # ap @data
+      res = Net::HTTP.post_form(URI.parse(url), @data)
     end
   end
 end

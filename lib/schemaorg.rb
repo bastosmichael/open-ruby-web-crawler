@@ -74,9 +74,9 @@ module Crawl
     ###############################################################
 
     def schema_tags
-      tags = @page.doc.css("meta[@name='keywords']").first['content'].split(' ')
+      tags = @page.doc.css("meta[@name='keywords']").first['content'].split(/ |,/)
       tags.delete_if {|x| x.match(/and|for|more/)}
-      @tags = tags
+      @tags = tags.reject(&:empty?).uniq
     end
 
   end

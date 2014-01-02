@@ -7,20 +7,19 @@ module Crawl
   class Controller
     def initialize opts
       @options = opts
-      get_host
+      set_host
       get_urls
       get_depth
       while url = @urls.pop do
-        crawl = Crawl::Spider.new(url, @depth)
+        crawl = Crawl::Spider.new(url, @options)
         crawl.shotgun
         crawl = nil
       end
     end
 
-    def get_host
-      @host = 'http://0.0.0.0:3000'
-      if @options[:host]
-        @host = @options[:host]
+    def set_host
+      if @options[:host] == nil
+        @options[:host] = 'http://0.0.0.0:3000'
       end
     end
 
@@ -33,12 +32,11 @@ module Crawl
     end
 
     def get_urls_from_api
-    	get_json("#{@host}/api/v1/get_urls")
+    	get_json("#{@options[:host]}/api/v1/get_urls")
     end
 
     def get_depth
-      if @options[:depth] == nil then @depth = 3
-      else @depth = @options[:depth] end
+      if @options[:depth] == nil then @options[:depth] = 3 end
     end
 
     def get_file
@@ -52,7 +50,9 @@ module Crawl
 
     def get_json path
         begin
-          uri = URI(path + "?access_token=#{@options[:api_key]}")
+          url = path + "?access_token=#{@options[:api_key]}"
+          ap url
+          uri = URI(url)
           response = Net::HTTP.get(uri)
           job = JSON.parse(response)
         rescue => e
