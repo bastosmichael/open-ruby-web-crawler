@@ -32,7 +32,7 @@ module Crawl
     end
 
     def get_urls_from_api
-    	get_json("#{@options[:host]}/api/v1/get_urls")
+    	get_json("#{@options[:host]}/api/v1/get_urls?access_token=#{@options[:api_key]}")
     end
 
     def get_depth
@@ -50,8 +50,7 @@ module Crawl
 
     def get_json path
         begin
-          url = path + "?access_token=#{@options[:api_key]}"
-          ap url
+          url = path
           uri = URI(url)
           response = Net::HTTP.get(uri)
           job = JSON.parse(response)
