@@ -10,3 +10,4 @@ gem "haml"
 gem "redis"
 gem "mongo"
 gem "bson_ext"
+gem 'party_foul'
