@@ -5,7 +5,7 @@ module Crawl
   class Spider
     def initialize site, opts
       @options = opts
-      @ua   = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.43 Safari/536.11"
+      @ua   = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36"
       @opts = self.settings
       @site = site
       @name = self.name
