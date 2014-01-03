@@ -30,7 +30,7 @@ module Crawl
 
     def save_to_api
       # ap @data
-      url = "#{@options[:host]}/api/v1/listings?access_token=#{@options[:api_key]}"
+      url = "#{@options[:host]}/api/v1/admin?access_token=#{@options[:api_key]}"
       res = Net::HTTP.post_form(URI.parse(url), @data)
     end
 

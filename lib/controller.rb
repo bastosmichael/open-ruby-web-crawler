@@ -25,10 +25,11 @@ module Crawl
 
     def get_urls
       @urls = []
-      @urls.concat(get_urls_from_api.reverse)
+      @urls.concat(get_urls_from_api)
       if @options[:urls]
         @urls.concat(@options[:urls])
       end
+      ap @urls
     end
 
     def get_urls_from_api
@@ -49,6 +50,7 @@ module Crawl
     private
 
     def get_json path
+      ap path
         begin
           url = path
           uri = URI(url)
