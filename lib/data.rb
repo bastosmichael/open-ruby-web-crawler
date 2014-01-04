@@ -21,7 +21,8 @@ module Crawl
 
     def save
       if !@data['type'].nil?
-        save_to_api
+        ap @data
+        # save_to_api
         # save_to_file
       end
     end

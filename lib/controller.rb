@@ -25,7 +25,7 @@ module Crawl
 
     def get_urls
       @urls = []
-      @urls.concat(get_urls_from_api)
+      # @urls.concat(get_urls_from_api)
       if @options[:urls]
         @urls.concat(@options[:urls])
       end
