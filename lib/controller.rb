@@ -25,15 +25,20 @@ module Crawl
 
     def get_urls
       @urls = []
-      # @urls.concat(get_urls_from_api)
+      # @urls.concat(get_follow_urls)
+      @urls.concat(get_all_urls)
       if @options[:urls]
         @urls.concat(@options[:urls])
       end
       ap @urls
     end
 
-    def get_urls_from_api
-    	get_json("#{@options[:host]}/api/v1/get_urls?access_token=#{@options[:api_key]}")
+    def get_follow_urls
+    	get_json("#{@options[:host]}/api/v1/get_follow_urls?access_token=#{@options[:api_key]}")
+    end
+
+    def get_all_urls
+      get_json("#{@options[:host]}/api/v1/get_all_urls?access_token=#{@options[:api_key]}")
     end
 
     def get_depth
