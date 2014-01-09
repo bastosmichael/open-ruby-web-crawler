@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem "trollop"
 gem "sinatra"
 gem "anemone"
+gem "spidr"
 gem "mechanize"
 gem "nokogiri"
 gem "awesome_print"

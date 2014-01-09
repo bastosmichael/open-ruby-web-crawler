@@ -12,7 +12,8 @@ module Crawl
       get_depth
       while url = @urls.pop do
         crawl = Crawl::Spider.new(url, @options)
-        crawl.shotgun
+        crawl.anemone_crawl
+        # crawl.mechanize_crawl
         crawl = nil
       end
     end

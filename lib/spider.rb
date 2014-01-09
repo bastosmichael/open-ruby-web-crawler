@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-require 'anemone'
+require 'mongo'
+require 'redis'
 
 module Crawl
   class Spider
@@ -11,15 +12,23 @@ module Crawl
       @name = self.name
     end
 
-    def shotgun
+    def anemone_crawl
+      require 'anemone'
       Anemone.crawl(@site, @opts) do |anemone|
-        #anemone.storage = Anemone::Storage.MongoDB
+        # anemone.storage = Anemone::Storage.Redis
+        # anemone.storage = Anemone::Storage.MongoDB
         anemone.on_every_page do |page|
+          next if page.body == nil 
           self.scrape page
           page.discard_doc!
           if @depth == 0 then return end
         end
       end
+    end
+
+    def mechanize_crawl
+      require 'mechanize'
+      
     end
 
     def scrape page
@@ -53,7 +62,8 @@ module Crawl
        read_timeout: 10, 
        user_agent: @ua,
        obey_robots_txt: false,
-       large_scale_crawl: true}
+       large_scale_crawl: true,
+       max_page_queue_size: 100,}
     end
   end
 end
