@@ -51,7 +51,8 @@ module Crawl
     end
 
     def name
-      @site.to_s.match(/www.(.+)\.com/)[1].capitalize rescue @site.to_s.match(/\/\/(.+)\.com/)[1].capitalize
+      uri = URI.parse(@site)
+      uri.host.to_s.match(/www.(.+)\.com/)[1].capitalize rescue @site.to_s.match(/(.+)\.com/)[1].capitalize
     end
 
     def settings
