@@ -10,8 +10,9 @@ module Crawl
       set_host
       get_urls
       get_depth
+      @links = @urls
       while url = @urls.pop do
-        crawl = Crawl::Spider.new(url, @options)
+        crawl = Crawl::Spider.new(url, @options, @links)
         crawl.anemone_crawl
         # crawl.mechanize_crawl
         crawl = nil

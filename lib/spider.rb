@@ -4,7 +4,8 @@ require 'redis'
 
 module Crawl
   class Spider
-    def initialize site, opts
+    def initialize site, opts, links
+      @links = links
       @options = opts
       @ua   = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36"
       @opts = self.settings
@@ -19,6 +20,11 @@ module Crawl
         # anemone.storage = Anemone::Storage.MongoDB
         anemone.on_every_page do |page|
           next if page.body == nil 
+          # ap page.links
+          # ap @links
+          # page.links.each do |l|
+          #   # if @links then puts "Found" end
+          # end
           self.scrape page
           page.discard_doc!
           if @depth == 0 then return end
