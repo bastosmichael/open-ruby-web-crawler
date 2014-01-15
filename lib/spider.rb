@@ -21,11 +21,12 @@ module Crawl
         anemone.on_every_page do |page|
           next if page.body == nil 
           # ap page.links
-          # ap @links
-          # page.links.each do |l|
+          ap @links
+          page.links.each do |l|
+            @links.index{|s| ap s.include?(l.to_s)}
           #   # if @links then puts "Found" end
-          # end
-          self.scrape page
+          end
+          # self.scrape page
           page.discard_doc!
           if @depth == 0 then return end
         end
